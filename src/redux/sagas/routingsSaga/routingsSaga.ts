@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import {
   setRoutingsData,
   fetchRoutingsFailure,
@@ -21,7 +21,8 @@ function* fetchRoutingsSaga() {
         routingsData: response.data,
       }),
     )
-  } catch (e: any) {
+  } catch (error) {
+    const e = error as AxiosError
     yield put(
       fetchRoutingsFailure({
         error: e.message,
